@@ -16,7 +16,7 @@ const existingUserRoute = require('./Routes/existing-user');
 // middleware
 const app = express();
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.CLIENT,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
 app.use(bodyParser.json());
