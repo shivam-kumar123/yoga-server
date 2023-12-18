@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 
 // local imports
 const UserData = require('./Models/userData');
@@ -12,6 +13,14 @@ const connectDB = require('./Config/db');
 const payRoute = require('./Routes/pay');
 const submitRoute = require('./Routes/submit');
 const existingUserRoute = require('./Routes/existing-user');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.SENDER_MAIL, 
+      pass: process.env.APP_PSWD,   
+    },
+  });
 
 // middleware
 const app = express();
@@ -44,11 +53,28 @@ cron.schedule('0 2 * * *', async () => {
         // Update the paid field to 0 for users
         const updatePromises = usersToUpdate.map(async (user) => {
             await UserData.findByIdAndUpdate(user._id, { $set: { paid: 0 } });
+
+            const mailOptions = {
+                from: process.env.SENDER_MAIL,
+                to: user.email,
+                subject: 'Yoga Class Purchase Expiry',
+                html: `
+                    <div>
+                        <h1>Yoga Class</h1>
+                        <p>Hello ${user.name}, purchase of yoga classes for start date (${user.startDate}) has expired.</p>
+                        <p>But you can join us by purchasing again.</p>
+                        <p>Link: https://yoga-client-e1u4.onrender.com/</p>
+                    </div>
+                `,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error(error);
+                }
+            });
         });
-
         await Promise.all(updatePromises);
-
-        console.log('Daily update: Reset paid field to 0 for users with 30 days passed since startDate');
     } catch (err) {
         console.error('Error updating paid field:', err);
     }
