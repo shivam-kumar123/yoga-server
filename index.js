@@ -29,7 +29,9 @@ connectDB();
 app.use('/submit', submitRoute);
 app.use('/pay', payRoute);
 app.use('/existing-user', existingUserRoute);
-
+app.use('*', (req, res) => {
+    res.status(404).send("<h1>404 Not Found</h1>");
+});
 // Schedule a cron job to run every day at 02:00
 cron.schedule('0 2 * * *', async () => {
     try {
