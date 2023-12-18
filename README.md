@@ -61,8 +61,11 @@ Server running on PORT as mentioned on .env file, lets assume you mentioned PORT
 
 
 ## System Architecture
+![yoga-architecture](https://github.com/shivam-kumar123/yoga-server/assets/75497119/34c1736a-9f25-4a4f-8740-39f89647baf2)
 
-![System Overview]()
+
+
+
 
 ## Future Scope
 
@@ -72,4 +75,5 @@ Server running on PORT as mentioned on .env file, lets assume you mentioned PORT
 - master slave architecture can be adopted for database for database failover prevention
 
 ## Check it out
-[![Frontend](https://img.shields.io/badge/Project-deployed-blue?style=for-the-badge&logo=appveyor)](https://yoga-client-e1u4.onrender.com/)
+[![Frontend](![yoga-architecture](https://github.com/shivam-kumar123/yoga-server/assets/75497119/99e44ed6-7334-4b2f-ada9-379f09407ace)
+https://img.shields.io/badge/Project-deployed-blue?style=for-the-badge&logo=appveyor)](https://yoga-client-e1u4.onrender.com/)
