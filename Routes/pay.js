@@ -16,11 +16,17 @@ const transporter = nodemailer.createTransport({
 
 payRoute.post('/', async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, startDate, selectedBatch } = req.body;
     const payEmail = email;
+    const payStartDate = startDate;
+    const paySelectedBatch = selectedBatch;
     const updatedUser = await UserData.findOneAndUpdate(
       { email: payEmail },
-      { $set: { paid: 500 } },
+      { $set: { 
+        paid: 500,
+        selectedBatch: paySelectedBatch,
+        startDate: payStartDate,
+       } },
       { new: true }
     );
 
@@ -30,8 +36,10 @@ payRoute.post('/', async (req, res) => {
       subject: 'Yoga Class Payment Confirmation',
       html: `
         <h1>Yoga Class</h1>
-        <p>Your payment of 500 has been completed.</p>
+        <p>Hello ${updatedUser.name}, Your seat at our yoga classes is now reserved</p>
+        <p>Your purchase of Rs 500 has been completed successfully.</p>
         <p>Your start date is ${updatedUser.startDate.toISOString().split('T')[0]}</p>
+        <p>your opted timing is ${updatedUser.selectedBatch}</p>
       `,
     };
 
