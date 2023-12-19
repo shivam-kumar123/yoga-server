@@ -73,6 +73,7 @@ Server running on PORT as mentioned on .env file, lets assume you mentioned PORT
 - Consisent hashing can be implemented on Nginx server for effective load balancing if multiple server instance are present 
 - database sharding can be done for making resilient system
 - master slave architecture can be adopted for database for database failover prevention
+- If there are multiple form submissions lets say on a very large scale our databse has less throughtput and it might go down, for such cases we need a message queue like kafka or RabbitMQ which has a very high throughput, message queue can also be used in the mailing system if server overloads.
 
 ## Check it out
 [![Frontend](https://img.shields.io/badge/Project-deployed-blue?style=for-the-badge&logo=appveyor)](https://yoga-client-e1u4.onrender.com/)
